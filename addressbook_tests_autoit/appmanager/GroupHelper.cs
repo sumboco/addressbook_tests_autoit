@@ -31,6 +31,29 @@ namespace addressbook_tests_autoit
             return list;
         }
 
+        public GroupHelper Remove(int v)
+        {
+            OpenGroupsDialogue();
+            aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51", "Select", "#0|#" + v, "");
+            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d51");
+            aux.WinWait("Delete group");
+            aux.ControlClick("Delete group", "", "WindowsForms10.BUTTON.app.0.2c908d51");
+            aux.ControlClick("Delete group", "", "WindowsForms10.BUTTON.app.0.2c908d53");
+            CloseGroupsDialogue();
+            return this;
+        }
+
+        public void IsElementGroupAndCreate(GroupData newGroup)
+        {
+            OpenGroupsDialogue();
+            if(int.Parse(aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51", "GetItemCount", "#0", "")) <= 1)
+            {
+                CloseGroupsDialogue();
+                Add(newGroup);
+            }
+            CloseGroupsDialogue();
+        }
+
         public void Add(GroupData newGroup)
         {
             OpenGroupsDialogue();
